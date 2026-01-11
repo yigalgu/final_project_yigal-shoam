@@ -1,0 +1,15 @@
+# ניהול טבלאות ונתונים
+pandas
+numpy
+
+# עבודה עם תמונות
+Pillow
+
+# Deep Learning ו-NLP
+torch
+transformers
+tqdm
+
+# כלי עזר וסביבת עבודה
+python-dotenv
+scikit-learn
