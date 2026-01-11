@@ -1,9 +1,21 @@
 import pandas as pd
 from pathlib import Path
 from PIL import Image
+import os
+from dotenv import load_dotenv
+
+# טעינת המשתנים מקובץ ה-.env
+load_dotenv()
 
 # ========= 1) הגדרות נתיבים =========
-base_path = Path(r"C:\Users\igal6\OneDrive\שולחן העבודה\project_db")
+# במקום נתיב קשיח, אנחנו קוראים אותו מהקובץ הסודי שיצרת
+env_path = os.getenv("DATA_PATH")
+
+if not env_path:
+    raise ValueError("Error: DATA_PATH is missing. Please create a .env file with your path.")
+
+base_path = Path(env_path)
+
 # שים לב: השתמשתי בשם התיקייה כפי שציינת
 images_folder = base_path / "images" / "images_normalized"
 
@@ -46,8 +58,13 @@ print(f"Matched images: {matches} out of {len(df)}")
 if matches == 0:
     print("\n--- ERROR DIAGNOSIS ---")
     print("Could not match any image. Here are some files I found in the folder:")
-    found_files = [f.name for f in list(images_folder.glob("*.png"))[:5]]
-    for f in found_files: print(f" - Found on disk: {f}")
+    # הוספתי בדיקה קטנה למקרה שהתיקייה לא קיימת כדי שהקוד לא יקרוס פה
+    if images_folder.exists():
+        found_files = [f.name for f in list(images_folder.glob("*.png"))[:5]]
+        for f in found_files: print(f" - Found on disk: {f}")
+    else:
+        print(f"ERROR: The folder {images_folder} does not exist.")
+
     print(f"Compare these to the CSV filename: {example_filename}")
 else:
     # שמירה והצגת דוגמה רק אם יש התאמות
