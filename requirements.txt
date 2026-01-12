@@ -7,9 +7,10 @@ Pillow
 
 # Deep Learning ו-NLP
 torch
+torchvision
 transformers
 tqdm
+scikit-learn
 
 # כלי עזר וסביבת עבודה
 python-dotenv
-scikit-learn
